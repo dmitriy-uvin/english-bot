@@ -4,6 +4,8 @@ namespace App\Conversations;
 
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
+use BotMan\Drivers\Telegram\Extensions\Keyboard;
+use BotMan\Drivers\Telegram\Extensions\KeyboardButton;
 
 class GreetingConversation extends Conversation
 {
@@ -13,12 +15,14 @@ class GreetingConversation extends Conversation
 
     public function askAge()
     {
+        $keyboard = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(true)
+            ->addRow(KeyboardButton::create('Test')->callbackData(1));
         $this->ask('So, how old are you?', function (Answer $answer) {
             $this->age = $answer->getText() ?? 'None';
 
             $this->say('Pretty good!');
             $this->askPurpose();
-        });
+        }, $keyboard);
     }
 
     public function askPurpose()
