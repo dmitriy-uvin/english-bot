@@ -22,7 +22,7 @@ class GreetingConversation extends Conversation
 
             $this->say('Pretty good!');
             $this->askPurpose();
-        }, $keyboard);
+        });
     }
 
     public function askPurpose()
